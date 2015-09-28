@@ -1,6 +1,6 @@
 # Tinc for Docker
 
-only 6mb size!
+only 20mb size! (Can be less with precompiled binary)
 
 ## Usage
 ```

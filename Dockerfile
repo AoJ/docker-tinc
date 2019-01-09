@@ -7,7 +7,7 @@ MAINTAINER AooJ <aooj@n13.cz>
 
 
 ENV DEV_PACKAGES="build-base make zlib-dev lzo-dev libressl-dev linux-headers ncurses-dev readline-dev"
-ENV TINC_VERSION=1.1pre15
+ENV TINC_VERSION=1.1pre17
 
 RUN     apk add --update ncurses readline lzo zlib $DEV_PACKAGES && \
         cd /tmp && \

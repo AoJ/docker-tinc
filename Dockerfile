@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.7
 MAINTAINER AooJ <aooj@n13.cz>
 
 # http://www.tinc-vpn.org/pipermail/tinc/2016-May/004572.html

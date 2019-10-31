@@ -34,3 +34,8 @@ VOLUME /etc/tinc
 
 ENTRYPOINT [ "/usr/sbin/tinc" ]
 CMD [ "start", "-D", "-U", "nobody" ]
+
+# if tun module loaded (lsmod | grep tun)
+# and there is error Failed to open '/dev/net/tun' : No such file or directory
+# mkdir /dev/net
+# mknod /dev/net/tun c 10 200

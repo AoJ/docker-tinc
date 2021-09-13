@@ -7,9 +7,9 @@ MAINTAINER AooJ <aooj@n13.cz>
 
 
 ENV DEV_PACKAGES="build-base make zlib-dev lzo-dev libressl-dev linux-headers ncurses-dev readline-dev"
-ENV TINC_VERSION=1.1pre17
+ENV TINC_VERSION=1.1pre18
 
-RUN     apk add --update ncurses readline lzo zlib $DEV_PACKAGES && \
+RUN     apk add --update ncurses readline lzo zlib libressl3.3-libcrypto $DEV_PACKAGES && \
         cd /tmp && \
         wget http://www.tinc-vpn.org/packages/tinc-${TINC_VERSION}.tar.gz && \
         tar -xzf tinc-${TINC_VERSION}.tar.gz && \

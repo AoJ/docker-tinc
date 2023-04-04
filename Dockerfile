@@ -7,27 +7,22 @@ MAINTAINER AooJ <aooj@n13.cz>
 
 
 ENV DEV_PACKAGES="build-base make zlib-dev lzo-dev libressl-dev linux-headers ncurses-dev readline-dev"
-ENV TINC_VERSION=1.1pre18
+ENV TINC_VERSION=4c6a9a9611442f958c3049a566ac4369653978e9
 
-RUN     apk add --update ncurses readline lzo zlib libressl3.3-libcrypto $DEV_PACKAGES && \
-        cd /tmp && \
-        wget http://www.tinc-vpn.org/packages/tinc-${TINC_VERSION}.tar.gz && \
-        tar -xzf tinc-${TINC_VERSION}.tar.gz && \
+RUN     cd /tmp && \
+        wget https://github.com/gsliepen/tinc/archive/${TINC_VERSION}.tar.gz && \
+        tar -xzf ${TINC_VERSION}.tar.gz && \
         cd tinc-${TINC_VERSION} && \
-        ./configure \
-                --prefix=/usr \
-                --sysconfdir=/etc \
-                --mandir=/usr/share/man \
-                --infodir=/usr/share/info \
-                --localstatedir=/var \
-                --enable-jumbograms \
-                --enable-lzo \
-                --enable-zlib && \
-        make && \
-        make install && \
-	apk del $DEV_PACKAGES && \
-	rm -rf /var/cache/apk/* && \
-	tinc --version
+        .ci/deps.sh && \
+        mkdir -p /tmp/target && \
+        .ci/build.sh /tmp/target && \
+        /tmp/target/src/tinc --version
+
+FROM alpine:latest
+RUN apk add readline lzo lz4-libs vde2-libs iptables \
+ && mkdir -p /usr/local/tinc /var/local/run
+COPY --from=0 /tmp/target/src/tinc /usr/sbin/tinc
+COPY --from=0 /tmp/target/src/tincd /usr/sbin/tincd
 
 EXPOSE 655/tcp 655/udp
 VOLUME /etc/tinc
